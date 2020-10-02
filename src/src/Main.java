@@ -1,4 +1,5 @@
-public class Main {
+public class Main{
+    private static Equation e;
     public static void main(String[] args) throws Exception {
         System.out.println("Hello, World!");
     }
