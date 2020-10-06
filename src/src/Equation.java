@@ -51,9 +51,17 @@ public class Equation {
         splitArraySize = splitEqu.size();
         for (int i=0; i < splitArraySize; i++) {
             if (splitEqu.get(i).equals("-")) {
+
+                if (i == 0) {
                 splitEqu.set(i+1, "-"+splitEqu.get(i+1));
                 splitEqu.remove(i);
                 splitArraySize--;
+                }
+                else {
+                    splitEqu.set(i+1, "-"+splitEqu.get(i+1));
+                    splitEqu.set(i, "+");
+                    splitArraySize--;
+                }
             }
         }
         
