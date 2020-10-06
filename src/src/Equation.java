@@ -43,20 +43,24 @@ public class Equation {
         if (splitEqu.get(0).equals(""))
         {
             splitEqu.remove(0);
+            System.out.println("removed");
         }
 
-        for (String e : splitEqu) {
-            System.out.println(e);
-        }
+        
 
         splitArraySize = splitEqu.size();
         for (int i=0; i < splitArraySize; i++) {
             if (splitEqu.get(i).equals("-")) {
-                splitEqu.set(i, "+");
                 splitEqu.set(i+1, "-"+splitEqu.get(i+1));
+                splitEqu.remove(i);
+                splitArraySize--;
             }
         }
         
+        for (String e : splitEqu) {
+            System.out.println(e);
+        }
+
         for (char operator : this.operators) {
             currentOperator =  splitEqu.indexOf(Character.toString(operator));
             while ( currentOperator > -1) {
