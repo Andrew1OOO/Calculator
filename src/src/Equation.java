@@ -43,7 +43,6 @@ public class Equation {
         if (splitEqu.get(0).equals(""))
         {
             splitEqu.remove(0);
-            System.out.println("removed");
         }
 
         
@@ -65,10 +64,7 @@ public class Equation {
             }
         }
         
-        for (String e : splitEqu) {
-            System.out.println(e);
-        }
-
+        
         for (char operator : this.operators) {
             currentOperator =  splitEqu.indexOf(Character.toString(operator));
             while ( currentOperator > -1) {
