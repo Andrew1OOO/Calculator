@@ -1,5 +1,6 @@
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 
 import javax.swing.plaf.synth.SynthOptionPaneUI;
 public class Equation {
@@ -20,10 +21,8 @@ public class Equation {
         return s;
     }
 
-    public void solve() {
-        for (int i=0; i < this.equation.length(); i++) {
-            
-        }
+    public double solve() {
+        return simpleSolve(this.equation);
     }
 
     public double simpleSolve(String equ) {
@@ -31,6 +30,7 @@ public class Equation {
         double num = 0;
         double currentNum = 0;
         int currentOperator;
+        int splitArraySize;
 
         // Splits the string into an array by numbesr and operators
         for (char operator : this.operators) {
@@ -38,6 +38,25 @@ public class Equation {
         }
         ArrayList<String> splitEqu = new ArrayList<>(Arrays.asList(equ.split("#")));
 
+        // Account for first number being "negative"
+
+        if (splitEqu.get(0).equals(""))
+        {
+            splitEqu.remove(0);
+        }
+
+        for (String e : splitEqu) {
+            System.out.println(e);
+        }
+
+        splitArraySize = splitEqu.size();
+        for (int i=0; i < splitArraySize; i++) {
+            if (splitEqu.get(i).equals("-")) {
+                splitEqu.set(i, "+");
+                splitEqu.set(i+1, "-"+splitEqu.get(i+1));
+            }
+        }
+        
         for (char operator : this.operators) {
             currentOperator =  splitEqu.indexOf(Character.toString(operator));
             while ( currentOperator > -1) {
