@@ -1,8 +1,30 @@
+import java.util.Scanner;
+
 public class Main{
-    private static Equation e;
     public static void main(String[] args) throws Exception {
-        System.out.println("Hello, World!");
-        e = new Equation("(1-2*2+2*0.5/2+9)");
-        System.out.println(e.solve());
+        Equation e = new Equation("(5+4) * (31+12) * 8+7");
+        /*Scanner in = new Scanner(System.in);
+        String exit = "n";
+        String input;
+        
+
+        while (exit.toLowerCase().equals("n") || exit.toLowerCase().equals("no")) {
+            System.out.println("Your expression: ");
+            input = in.nextLine();
+
+            /* The boolean parameter indicates whether or not to print
+            the individual mathematical operations that occur
+            when solving. By default, it is true. This can be
+            disabled by changing the constructor call line to:
+            3 = new Equation("("+input+")", false) 
+
+            e = new Equation("("+input+")");
+            System.out.println("Output: " + e.solve());
+
+            System.out.println("Would you like to exit? (y/n) : ");
+            exit = in.nextLine();
+            */
+            System.out.println(e.solve());
+
+        }
     }
-}

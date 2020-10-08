@@ -47,17 +47,44 @@ public class Equation {
         char operator;
         Integer num1;
         Integer num2;
+        String x;
         ArrayList<Character> equArray = new ArrayList<Character>(10);
         ArrayList<Integer> numArray = new ArrayList<Integer>(10);
         ArrayList<Character> opArray = new ArrayList<Character>(10);
         for (char c : equ.toCharArray()) {
             equArray.add(c);
-        }        
+        }
         for(int i = 0; i < equArray.size(); i++){
+            if(Character.isDigit(equArray.get(i))) {
+                
+                x = String.valueOf(equArray.get(i));
 
-            if(equArray.get(i) > '0' &&  equArray.get(i) <= '9') {
+                try{
+                    /*for(int j = i+1; j < equArray.size(); j++){ any number of digits
+                        if(Character.isDigit(equArray.get(j))){
+                            x += equArray.get(j);
+                            System.out.println(equArray.get(j));
+                            equArray.remove(j);
+                        }
+                        else{
+                            break;
+                        }
+                    }*/
+                    // only 2 digits for now, working on more digits
+                    if(Character.isDigit(equArray.get(i + 1))){
+                        x += equArray.get(i + 1);
+                        equArray.remove(i+1);
+                    }
+                }
+                catch(IndexOutOfBoundsException e){
+                    numArray.add(Integer.parseInt(x));
+                    continue;
+                }
+                
+                numArray.add(Integer.parseInt(x));
+                System.out.println(opArray);
+                System.out.println(numArray);
 
-                numArray.add(Character.getNumericValue(equArray.get(i)));
             }
             else if(equArray.get(i) == '('){
                 opArray.add(equArray.get(i));
@@ -73,7 +100,7 @@ public class Equation {
                         num2 = numArray.get(numArray.size() -1);
                         numArray.remove(numArray.size() -1);
                         opArray.remove(opArray.size() -1);
-                        System.out.println((int)simpleSolve(Integer.toString(num1) + operator + Integer.toString(num2)));
+                        //System.out.println((int)simpleSolve(Integer.toString(num1) + operator + Integer.toString(num2)));
                         numArray.add((int)simpleSolve(Integer.toString(num1) + operator + Integer.toString(num2)));
                     }
                     else{
@@ -91,7 +118,7 @@ public class Equation {
                     num2 = numArray.get(numArray.size() -1);
                     numArray.remove(numArray.size() -1);
                     opArray.remove(opArray.size() -1);
-                    System.out.println((int)simpleSolve(Integer.toString(num1) + operator + Integer.toString(num2)));
+                    //System.out.println((int)simpleSolve(Integer.toString(num1) + operator + Integer.toString(num2)));
                     numArray.add((int)simpleSolve(Integer.toString(num1) + operator + Integer.toString(num2)));
                 }
                 opArray.add(equArray.get(i));
@@ -258,6 +285,7 @@ public class Equation {
     }
 
     private int getOperatorPriority(String a) {
+
         // Lower value means greater importance
         if (a.equals("^")) {
             return 1;
