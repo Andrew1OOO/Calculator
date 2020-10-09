@@ -52,26 +52,23 @@ public class Equation {
         for (char c : equ.toCharArray()) {
             equArray.add(c);
         }
+        
         for(int i = 0; i < equArray.size(); i++){
             if(Character.isDigit(equArray.get(i))) {
                 
                 x = String.valueOf(equArray.get(i));
 
                 try{
-                    /*for(int j = i+1; j < equArray.size(); j++){ any number of digits
+                    for(int j = i+1; j < equArray.size(); j++){
                         if(Character.isDigit(equArray.get(j))){
                             x += equArray.get(j);
-                            System.out.println(equArray.get(j));
+                            //System.out.println(equArray.get(j));
                             equArray.remove(j);
+                            j--;
                         }
                         else{
                             break;
                         }
-                    }*/
-                    // only 2 digits for now, working on more digits
-                    if(Character.isDigit(equArray.get(i + 1))){
-                        x += equArray.get(i + 1);
-                        equArray.remove(i+1);
                     }
                 }
                 catch(IndexOutOfBoundsException e){
@@ -80,8 +77,8 @@ public class Equation {
                 }
                 
                 numArray.add(Integer.parseInt(x));
-                System.out.println(opArray);
-                System.out.println(numArray);
+                //System.out.println(opArray);
+                //System.out.println(numArray);
 
             }
             else if(equArray.get(i) == '('){
@@ -130,11 +127,11 @@ public class Equation {
             num2 = numArray.get(numArray.size() -1);
             numArray.remove(numArray.size() -1);
             opArray.remove(opArray.size() -1);
-            System.out.println(Integer.toString(num1) + operator + Integer.toString(num2));
-            System.out.println(simpleSolve(Integer.toString(num1) + operator + Integer.toString(num2)));
+            //System.out.println(Integer.toString(num1) + operator + Integer.toString(num2));
+            //System.out.println(simpleSolve(Integer.toString(num1) + operator + Integer.toString(num2)));
             numArray.add((int)simpleSolve(Integer.toString(num1) + operator + Integer.toString(num2)));
         }
-        System.out.println(equ);
+        //System.out.println(equ);
         return numArray.get(0);
     }
 

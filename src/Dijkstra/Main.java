@@ -2,7 +2,7 @@ import java.util.Scanner;
 
 public class Main{
     public static void main(String[] args) throws Exception {
-        Equation e = new Equation("(5+4) * (31+12) * 8+7");
+        Equation e = new Equation("9(100)");
         /*Scanner in = new Scanner(System.in);
         String exit = "n";
         String input;
