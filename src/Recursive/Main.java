@@ -14,11 +14,29 @@ public class Main{
             /* The boolean parameter indicates whether or not to print
             the individual mathematical operations that occur
             when solving. By default, it is true. This can be
-            disabled by changing the constructor call line to:
-            3 = new Equation("("+input+")", false) */
+            disabled by changing the instantiation call line to:
+            e = new Equation("("+input+")", false) */
 
-            e = new Equation("("+input+")");
-            System.out.println("Output: " + e.solve());
+            try {
+                if (!Equation.invalidParentheses("("+input+")")){
+                    System.out.println("Evaluating: " + "("+input+") ...");
+                    e = new Equation("("+input+")");
+                    System.out.println("Output: " + e.solve());
+                }
+                else {
+                    System.out.println("Invalid parentheses order!");
+                }
+                
+            }
+            catch (java.lang.IndexOutOfBoundsException exception){
+                System.out.println("\nInvalid parentheses order!");
+            }
+            catch (java.lang.NumberFormatException exception) {
+                System.out.println("\nInvalid operator used/operator order!");
+            }
+            finally {
+            }
+            
 
             System.out.println("Would you like to exit? (y/n) : ");
             exit = in.nextLine();

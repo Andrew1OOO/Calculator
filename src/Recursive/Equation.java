@@ -17,6 +17,22 @@ public class Equation {
         this.operators = "^*/+-".toCharArray();
         this.printOperations = printOperations;
     }
+    
+    public static boolean invalidParentheses(String s) {
+        int openCount = 0;
+        int closedCount = 0;
+
+        for (char c : s.toCharArray()) {
+            if (c == '(') {
+                openCount ++;
+            }
+            else if (c == ')') {
+                closedCount ++;
+            }
+        }
+
+        return !(openCount == closedCount);
+    }
 
     private static String clean(String s) {
         s = s.replaceAll(" ", "");
@@ -132,7 +148,7 @@ public class Equation {
         }
 
         // Clean array here
-        splitEqu = simpleClean(splitEqu);  
+        splitEqu = simpleClean(splitEqu);
 
         // 1 is defined  as the highest priority, and 3 is lowest
         // starts at 1, ends at 3 (inclusive)

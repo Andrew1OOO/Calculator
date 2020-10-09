@@ -2,8 +2,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 
-import javax.security.auth.PrivateCredentialPermission;
-import javax.swing.plaf.synth.SynthOptionPaneUI;
 public class Equation {
     
 	private String equation;
