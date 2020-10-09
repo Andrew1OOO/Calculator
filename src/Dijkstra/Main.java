@@ -2,7 +2,7 @@ import java.util.Scanner;
 
 public class Main{
     public static void main(String[] args) throws Exception {
-        Equation e = new Equation("1.1+1");
+        Equation e = new Equation("(312+ 31) * 24 + (15*3)");
         /*Scanner in = new Scanner(System.in);
         String exit = "n";
         String input;

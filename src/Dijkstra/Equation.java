@@ -58,24 +58,17 @@ public class Equation {
                 
                 x = String.valueOf(equArray.get(i));
 
-                try{
-                    for(int j = i+1; j < equArray.size(); j++){
-                        if(Character.isDigit(equArray.get(j))){
-                            x += equArray.get(j);
-                            //System.out.println(equArray.get(j));
-                            equArray.remove(j);
-                            j--;
+                for(int j = i+1; j < equArray.size(); j++){
+                    if(Character.isDigit(equArray.get(j))){
+                        x += equArray.get(j);
+                        //System.out.println(equArray.get(j));
+                        equArray.remove(j);
+                        j--;
                         }
-                        else{
-                            break;
-                        }
+                    else{
+                        break;
                     }
                 }
-                catch(IndexOutOfBoundsException e){
-                    numArray.add(Integer.parseInt(x));
-                    continue;
-                }
-                
                 numArray.add(Integer.parseInt(x));
                 //System.out.println(opArray);
                 //System.out.println(numArray);
