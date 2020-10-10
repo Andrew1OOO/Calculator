@@ -59,6 +59,10 @@ public class Equation {
     }
 
     private static String insertMultiplication(String a) {
+        /* Checks and accounts for if the equation is trying
+        to mulitply operands without the "*" operator.
+        "2(9)" gets turned into "2*(9)"*/
+
         for (int i=1; i<a.length()-1; i++) {
             if (a.charAt(i) == '(') {
              if (Character.isDigit(a.charAt(i-1))) {
@@ -191,6 +195,9 @@ public class Equation {
                         else if (item.equals("+")) {
                             currentNum = Double.parseDouble(splitEqu.get(c-1)) + Double.parseDouble(splitEqu.get(c+1));
                         }
+                        else if (item.equals("-")) {
+                            currentNum = Double.parseDouble(splitEqu.get(c-1)) - Double.parseDouble(splitEqu.get(c+1));
+                        }
 
                         // Removes the used numbers and replaces with the new value
                         splitEqu.remove(c+1);
@@ -229,6 +236,14 @@ public class Equation {
                     listLen--;
                     i--;
                 }
+            }
+            if (list.get(i).equals("--")) {
+                /* Exception if subtracting 2 negative numbers */
+                list.set(i, "-");
+                list.set(i+1, "-"+list.get(i+1));
+                list.remove(i-1);
+                i--;
+                listLen--;
             }
         }
         return list;
