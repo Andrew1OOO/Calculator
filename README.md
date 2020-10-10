@@ -4,10 +4,10 @@ this project provides two calculator solutions. They can be used to solve mathem
 according to the rules of PEMDAS, and using the operators:
 - ! : Integer Factorials
 - ^ : Exponents
-- * : Multiplication
+- \* : Multiplication
 - / : Division
-- + : Addition
-- - : Subtraction
+- \+ : Addition
+- \- : Subtraction
 
 
 ## Recursive
