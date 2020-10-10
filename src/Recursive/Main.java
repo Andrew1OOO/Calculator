@@ -8,8 +8,10 @@ public class Main{
         Equation e;
 
         while (exit.toLowerCase().equals("n") || exit.toLowerCase().equals("no")) {
-            System.out.println("Your expression: ");
+            System.out.println("---------------------");
+            System.out.println("Your expression (+ - / * ^): ");
             input = in.nextLine();
+            System.out.println("---------------------");
 
             /* The boolean parameter indicates whether or not to print
             the individual mathematical operations that occur
@@ -19,7 +21,8 @@ public class Main{
 
             try {
                 if (!Equation.invalidParentheses("("+input+")")){
-                    System.out.println("Evaluating: " + "("+input+") ...");
+                    System.out.println("Evaluating: " + "("+input+") >>>");
+                    System.out.println("---------------------");
                     e = new Equation("("+input+")");
                     System.out.println("Output: " + e.solve());
                 }
@@ -37,7 +40,6 @@ public class Main{
             finally {
             }
             
-
             System.out.println("Would you like to exit? (y/n) : ");
             exit = in.nextLine();
         }

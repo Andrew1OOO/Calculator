@@ -4,17 +4,15 @@ import java.util.Arrays;
 public class Equation {
     
     private String equation;
-    private char[] operators;
     boolean printOperations;
+    public static final char[] operators = "^*/+-".toCharArray();
 
     public Equation(String equ) {
         this.equation = clean(equ);
-        this.operators = "^*/+-".toCharArray();
         this.printOperations = true;
     }
     public Equation(String equ, boolean printOperations) {
         this.equation = clean(equ);
-        this.operators = "^*/+-".toCharArray();
         this.printOperations = printOperations;
     }
     
@@ -35,6 +33,7 @@ public class Equation {
     }
 
     private static String clean(String s) {
+        s = insertMultiplication(s);
         s = s.replaceAll(" ", "");
         boolean flag = false;
 
@@ -59,11 +58,28 @@ public class Equation {
         return s;
     }
 
-    public double solve() {
+    private static String insertMultiplication(String a) {
+        for (int i=1; i<a.length()-1; i++) {
+            if (a.charAt(i) == '(') {
+             if (Character.isDigit(a.charAt(i-1))) {
+                 a = a.substring(0, i) + "*" + a.substring(i);
+                 i++;
+             }
+            }
+            else if (a.charAt(i) == ')') {
+                if (Character.isDigit(a.charAt(i+1)) || a.charAt(i+1) == '(') {
+                    a = a.substring(0, i+1) + "*" + a.substring(i+1);
+                    i++;
+                }
+            }
+        }
+        return a;
+     }
 
+    public double solve() {
         if (this.equation.contains("(")) {
             /* This 'portion' of the method, recursively breaks down parenthetical statements
-            into simple expressions through brute force. It then takes the outputs of all the
+            into simple expressions sequentially. It then takes the outputs of all the
             parenthetical statements and calculates the rest of the expression using
             simpleSolve() */
             
@@ -116,7 +132,7 @@ public class Equation {
         int splitArraySize;
 
         // Splits the string into an arraylist by numbers and operators
-        for (char operator : this.operators) {
+        for (char operator : operators) {
             equ = equ.replace(""+operator, "#"+operator+"#");
         }
         ArrayList<String> splitEqu = new ArrayList<>(Arrays.asList(equ.split("#")));
@@ -219,7 +235,7 @@ public class Equation {
     }
 
     private boolean isOperator(String a) {
-        for (char c : this.operators) {
+        for (char c : operators) {
             if (a.equals(Character.toString(c))) {
                 return true;
             }
