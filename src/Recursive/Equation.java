@@ -1,11 +1,10 @@
 import java.util.ArrayList;
 import java.util.Arrays;
-
 public class Equation {
     
     private String equation;
     boolean printOperations;
-    public static final char[] operators = "^*/+-".toCharArray();
+    public static final char[] operators = "^!*/+-".toCharArray();
 
     public Equation(String equ) {
         this.equation = clean(equ);
@@ -178,9 +177,13 @@ public class Equation {
                 item = splitEqu.get(c);
                 if (isOperator(item)) {
                     if (getOperatorPriority(item) == i) {
-
                         if (this.printOperations) {
-                            System.out.print("Operation: " + splitEqu.get(c-1)+" "+item+" "+splitEqu.get(c+1));
+                            if (!item.equals("!")) {
+                                System.out.print("Operation: " + splitEqu.get(c-1)+" "+item+" "+splitEqu.get(c+1));
+                            }
+                            else {
+                                System.out.print("Operation: " + splitEqu.get(c-1)+item);
+                            }      
                         }        
                 
                         if (item.equals("^")) {
@@ -198,11 +201,25 @@ public class Equation {
                         else if (item.equals("-")) {
                             currentNum = Double.parseDouble(splitEqu.get(c-1)) - Double.parseDouble(splitEqu.get(c+1));
                         }
+                        else if (item.equals("!")) {
+                            // Factorials only account for integers (positive and negative)
+                            currentNum = Integer.parseInt(splitEqu.get(c-1));
+                            for (int g=1; g <= Math.abs(Integer.parseInt(splitEqu.get(c-1)))-1; g++) {
+                                currentNum *= g;
+                            }
+                        }
 
                         // Removes the used numbers and replaces with the new value
-                        splitEqu.remove(c+1);
-                        splitEqu.set(c, ""+currentNum);
-                        splitEqu.remove(c-1);
+                        if (!item.equals("!")) {
+                            splitEqu.remove(c+1);
+                            splitEqu.set(c, ""+currentNum);
+                            splitEqu.remove(c-1);
+                        }
+                        else {
+                            splitEqu.set(c, ""+currentNum);
+                            splitEqu.remove(c-1);
+                        }
+                        
 
                         if (this.printOperations) {
                             System.out.println(" = " + currentNum);
@@ -231,7 +248,7 @@ public class Equation {
             if (i < listLen-1) {
                 /* Exception if 2 operators are next to each other. 
                 This can only happen with "negative number math" */
-                if (isOperator(list.get(i)) && isOperator(list.get(i+1))) {
+                if (isOperator(list.get(i)) && isOperator(list.get(i+1)) && !list.get(i).equals("!")) {
                     list.remove(i+1);
                     listLen--;
                     i--;
@@ -260,7 +277,7 @@ public class Equation {
 
     private int getOperatorPriority(String a) {
         // Lower value means greater importance
-        if (a.equals("^")) {
+        if (a.equals("^") || a.equals("!")) {
             return 1;
         }
         else if (a.equals("*") || a.equals("/")) {

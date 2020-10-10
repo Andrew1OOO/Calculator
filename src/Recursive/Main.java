@@ -9,20 +9,22 @@ public class Main{
 
         while (exit.toLowerCase().equals("n") || exit.toLowerCase().equals("no")) {
             System.out.println("---------------------");
-            System.out.println("Your expression (+ - / * ^): ");
+            System.out.println("Your expression (+ - / * ^ !): ");
             input = in.nextLine();
             System.out.println("---------------------");
 
             /* The boolean parameter indicates whether or not to print
             the individual mathematical operations that occur
             when solving. By default, it is true. This can be
-            disabled by changing the instantiation call line to:
-            e = new Equation("("+input+")", false) */
+            disabled by changing the instantiation line to:
+            e = new Equation("("+input+")", false) 
+            */
 
             try {
                 if (!Equation.invalidParentheses("("+input+")")){
                     System.out.println("Evaluating: " + "("+input+") >>>");
                     System.out.println("---------------------");
+                    // Initial instantiation
                     e = new Equation("("+input+")");
                     System.out.println("Output: " + e.solve());
                 }
