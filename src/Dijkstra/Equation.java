@@ -1,7 +1,6 @@
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
-//TODO: make the class read decimal numbers and uneven amounts of parentheses
 public class Equation {
     
 	private String equation;
@@ -13,7 +12,11 @@ public class Equation {
         this.operators = "^*/+-".toCharArray();
         this.printOperations = true;
     }
-
+    public Equation(String equ, boolean x) {
+        this.equation = clean(equ);
+        this.operators = "^*/+-".toCharArray();
+        this.printOperations = x;
+    }
     private static String clean(String s) {
         s = s.replaceAll(" ", "");
         boolean flag = false;
@@ -52,7 +55,7 @@ public class Equation {
         for (char c : equ.toCharArray()) {
             equArray.add(c);
         }
-        
+        try{
         for(int i = 0; i < equArray.size(); i++){
             if(Character.isDigit(equArray.get(i)) || equArray.get(i) == '.') {
                 
@@ -118,6 +121,11 @@ public class Equation {
         }
         //System.out.println(equ);
         return numArray.get(0);
+    }
+    catch(NumberFormatException e){
+        System.out.println("Equation is invalid!");
+        return 0.0;
+    }
     }
 
     private double simpleSolve(String equ) {
