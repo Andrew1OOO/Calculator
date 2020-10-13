@@ -1,7 +1,7 @@
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
-
+//TODO: make the class read decimal numbers and uneven amounts of parentheses
 public class Equation {
     
 	private String equation;
@@ -43,24 +43,25 @@ public class Equation {
         String equ = this.equation;
         String operators = "^*/+-";
         char operator;
-        Integer num1;
-        Integer num2;
+        Double num1;
+        Double num2;
         String x;
         ArrayList<Character> equArray = new ArrayList<Character>(10);
-        ArrayList<Integer> numArray = new ArrayList<Integer>(10);
+        ArrayList<Double> numArray = new ArrayList<Double>(10);
         ArrayList<Character> opArray = new ArrayList<Character>(10);
         for (char c : equ.toCharArray()) {
             equArray.add(c);
         }
         
         for(int i = 0; i < equArray.size(); i++){
-            if(Character.isDigit(equArray.get(i))) {
+            if(Character.isDigit(equArray.get(i)) || equArray.get(i) == '.') {
                 
                 x = String.valueOf(equArray.get(i));
 
                 for(int j = i+1; j < equArray.size(); j++){
-                    if(Character.isDigit(equArray.get(j))){
+                    if(Character.isDigit(equArray.get(j)) || equArray.get(j) == '.'){
                         x += equArray.get(j);
+                        
                         //System.out.println(equArray.get(j));
                         equArray.remove(j);
                         j--;
@@ -69,7 +70,7 @@ public class Equation {
                         break;
                     }
                 }
-                numArray.add(Integer.parseInt(x));
+                numArray.add(Double.parseDouble(x));
                 //System.out.println(opArray);
                 //System.out.println(numArray);
 
@@ -82,14 +83,11 @@ public class Equation {
             else if(equArray.get(i) == ')'){
                 while(opArray.get(opArray.size() -1) != '('){
                     if(numArray.size() >= 2){
-                        operator = opArray.get(opArray.size() -1);
-                        num1 = numArray.get(numArray.size() -1);
-                        numArray.remove(numArray.size() -1);
-                        num2 = numArray.get(numArray.size() -1);
-                        numArray.remove(numArray.size() -1);
-                        opArray.remove(opArray.size() -1);
+                        operator = pop(opArray);
+                        num1 = pop(numArray, numArray.size());
+                        num2 = pop(numArray, numArray.size());
                         //System.out.println((int)simpleSolve(Integer.toString(num1) + operator + Integer.toString(num2)));
-                        numArray.add((int)simpleSolve(Integer.toString(num1) + operator + Integer.toString(num2)));
+                        numArray.add(simpleSolve(Double.toString(num1) + operator + Double.toString(num2)));
                     }
                     else{
                         return numArray.get(0);
@@ -100,39 +98,35 @@ public class Equation {
             }
             else if(containsChar(operators, equArray.get(i))){
                 while(opArray.size() != 0 && checkPrecedence(opArray.get(opArray.size() -1), equArray.get(i))){
-                    operator = opArray.get(opArray.size() -1);
-                    num1 = numArray.get(numArray.size() -1);
-                    numArray.remove(numArray.size() -1);
-                    num2 = numArray.get(numArray.size() -1);
-                    numArray.remove(numArray.size() -1);
-                    opArray.remove(opArray.size() -1);
+                    operator = pop(opArray);
+                    num1 = pop(numArray, numArray.size());
+                    num2 = pop(numArray, numArray.size());
                     //System.out.println((int)simpleSolve(Integer.toString(num1) + operator + Integer.toString(num2)));
-                    numArray.add((int)simpleSolve(Integer.toString(num1) + operator + Integer.toString(num2)));
+                    numArray.add(simpleSolve(Double.toString(num1) + operator + Double.toString(num2)));
                 }
                 opArray.add(equArray.get(i));
             }
 
         }
         while(opArray.size() != 0){
-            operator = opArray.get(opArray.size() -1);
-            num1 = numArray.get(numArray.size() -1);
-            numArray.remove(numArray.size() -1);
-            num2 = numArray.get(numArray.size() -1);
-            numArray.remove(numArray.size() -1);
-            opArray.remove(opArray.size() -1);
+            operator = pop(opArray);
+            num1 = pop(numArray, numArray.size());
+            num2 = pop(numArray, numArray.size());
             //System.out.println(Integer.toString(num1) + operator + Integer.toString(num2));
             //System.out.println(simpleSolve(Integer.toString(num1) + operator + Integer.toString(num2)));
-            numArray.add((int)simpleSolve(Integer.toString(num1) + operator + Integer.toString(num2)));
+            numArray.add(simpleSolve(Double.toString(num1) + operator + Double.toString(num2)));
         }
         //System.out.println(equ);
         return numArray.get(0);
     }
 
     private double simpleSolve(String equ) {
+
         /* This method solves equations following (P)EMDAS.
         It only works on 'simple' equations that do not have
         parenthesis and a defined order */
-
+        
+        
         double currentNum = 0;
         int splitArraySize;
 
@@ -151,7 +145,7 @@ public class Equation {
 
         // Converts "subtracting" numbers into negative numbers
         // {"-", "1"} becomes {"-1"} and {"1","-","2"} becmomes {"1","+","-2"}
-        splitArraySize = splitEqu.size();
+        /*splitArraySize = splitEqu.size();
         for (int i=0; i < splitArraySize; i++) {
             if (splitEqu.get(i).equals("-")) {
 
@@ -167,6 +161,7 @@ public class Equation {
                 }
             }
         }
+        */
 
         // Clean array here
         splitEqu = simpleClean(splitEqu);  
@@ -185,17 +180,21 @@ public class Equation {
                         }        
                 
                         if (item.equals("^")) {
-                            currentNum = Math.pow(Double.parseDouble(splitEqu.get(c-1)), Double.parseDouble(splitEqu.get(c+1)));
+                            currentNum = Math.pow(Double.parseDouble(splitEqu.get(c+1)), Double.parseDouble(splitEqu.get(c-1)));
                         }
                         else if (item.equals("*")) {
                             currentNum = Double.parseDouble(splitEqu.get(c-1)) * Double.parseDouble(splitEqu.get(c+1));
                         }
                         else if (item.equals("/")) {
-                            currentNum = Double.parseDouble(splitEqu.get(c-1)) / Double.parseDouble(splitEqu.get(c+1));
+                            currentNum = Double.parseDouble(splitEqu.get(c+1)) / Double.parseDouble(splitEqu.get(c-1));
                         }
                         else if (item.equals("+")) {
                             currentNum = Double.parseDouble(splitEqu.get(c-1)) + Double.parseDouble(splitEqu.get(c+1));
                         }
+                        else if (item.equals("-")) {
+                            currentNum = Double.parseDouble(splitEqu.get(c+1)) - Double.parseDouble(splitEqu.get(c-1));
+                        }
+                        
 
                         // Removes the used numbers and replaces with the new value
                         splitEqu.remove(c+1);
@@ -284,5 +283,18 @@ public class Equation {
         else {
             return 3;
         }
+    }
+
+    private char pop(ArrayList<Character> x){
+        char op;
+        op = x.get(x.size() -1);
+        x.remove(x.size()-1);
+        return op;
+    }
+    private Double pop(ArrayList<Double> x, int length){
+        Double num;
+        num = x.get(x.size() -1);
+        x.remove(x.size()-1);
+        return num;
     }
 }
