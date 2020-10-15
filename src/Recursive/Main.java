@@ -31,7 +31,6 @@ public class Main{
                 else {
                     System.out.println("Invalid parentheses order!");
                 }
-                
             }
             catch (java.lang.IndexOutOfBoundsException exception){
                 System.out.println("\nInvalid parentheses order!");

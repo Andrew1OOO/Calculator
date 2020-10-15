@@ -16,6 +16,10 @@ public class Equation {
     }
     
     public static boolean invalidParentheses(String s) {
+        /* Returns a boolean representing whether
+        the string equation has an equation amount
+        of opening and closing parentheses */
+
         int openCount = 0;
         int closedCount = 0;
 
@@ -81,7 +85,7 @@ public class Equation {
 
     public double solve() {
         if (this.equation.contains("(")) {
-            /* This 'portion' of the method, recursively breaks down parenthetical statements
+            /* This portion of the method, recursively breaks down parenthetical statements
             into simple expressions sequentially. It then takes the outputs of all the
             parenthetical statements and calculates the rest of the expression using
             simpleSolve() */
@@ -120,7 +124,7 @@ public class Equation {
 
             return simpleSolve(finalEquation);
         }
-        // If there are no parentheses, "order" does not matter
+        // If there are no parentheses, order does not matter (outside of operations)
         else {
             return simpleSolve(this.equation);
         }
@@ -169,7 +173,7 @@ public class Equation {
         // Clean array here
         splitEqu = simpleClean(splitEqu);
 
-        // 1 is defined  as the highest priority, and 3 is lowest
+        // 1 is defined  as the highest priority for an operator, and 3 is lowest
         // starts at 1, ends at 3 (inclusive)
         String item;
         for (int i=1; i<= 3; i++) {
@@ -267,6 +271,8 @@ public class Equation {
     }
 
     private boolean isOperator(String a) {
+        /* Checks if a string representers
+        a mathematical operator */
         for (char c : operators) {
             if (a.equals(Character.toString(c))) {
                 return true;
