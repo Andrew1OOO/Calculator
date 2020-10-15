@@ -90,7 +90,7 @@ public class Equation {
                         num1 = pop(numArray, numArray.size());
                         num2 = pop(numArray, numArray.size());
                         //System.out.println((int)simpleSolve(Integer.toString(num1) + operator + Integer.toString(num2)));
-                        numArray.add(simpleSolve(Double.toString(num1) + operator + Double.toString(num2)));
+                        numArray.add(simpleSolve(Double.toString(num2) + operator + Double.toString(num1)));
                     }
                     else{
                         return numArray.get(0);
@@ -105,7 +105,7 @@ public class Equation {
                     num1 = pop(numArray, numArray.size());
                     num2 = pop(numArray, numArray.size());
                     //System.out.println((int)simpleSolve(Integer.toString(num1) + operator + Integer.toString(num2)));
-                    numArray.add(simpleSolve(Double.toString(num1) + operator + Double.toString(num2)));
+                    numArray.add(simpleSolve(Double.toString(num2) + operator + Double.toString(num1)));
                 }
                 opArray.add(equArray.get(i));
             }
@@ -117,7 +117,7 @@ public class Equation {
             num2 = pop(numArray, numArray.size());
             //System.out.println(Integer.toString(num1) + operator + Integer.toString(num2));
             //System.out.println(simpleSolve(Integer.toString(num1) + operator + Integer.toString(num2)));
-            numArray.add(simpleSolve(Double.toString(num1) + operator + Double.toString(num2)));
+            numArray.add(simpleSolve(Double.toString(num2) + operator + Double.toString(num1)));
         }
         //System.out.println(equ);
         return numArray.get(0);
@@ -137,7 +137,6 @@ public class Equation {
         
         double currentNum = 0;
         int splitArraySize;
-
         // Splits the string into an arraylist by numbers and operators
         for (char operator : this.operators) {
             equ = equ.replace(""+operator, "#"+operator+"#");
@@ -153,10 +152,9 @@ public class Equation {
 
         // Converts "subtracting" numbers into negative numbers
         // {"-", "1"} becomes {"-1"} and {"1","-","2"} becmomes {"1","+","-2"}
-        /*splitArraySize = splitEqu.size();
+        splitArraySize = splitEqu.size();
         for (int i=0; i < splitArraySize; i++) {
             if (splitEqu.get(i).equals("-")) {
-
                 if (i == 0) {
                 splitEqu.set(i+1, "-"+splitEqu.get(i+1));
                 splitEqu.remove(i);
@@ -169,7 +167,7 @@ public class Equation {
                 }
             }
         }
-        */
+        
 
         // Clean array here
         splitEqu = simpleClean(splitEqu);  
@@ -188,21 +186,18 @@ public class Equation {
                         }        
                 
                         if (item.equals("^")) {
-                            currentNum = Math.pow(Double.parseDouble(splitEqu.get(c+1)), Double.parseDouble(splitEqu.get(c-1)));
+                            currentNum = Math.pow(Double.parseDouble(splitEqu.get(c-1)), Double.parseDouble(splitEqu.get(c+1)));
                         }
                         else if (item.equals("*")) {
                             currentNum = Double.parseDouble(splitEqu.get(c-1)) * Double.parseDouble(splitEqu.get(c+1));
                         }
                         else if (item.equals("/")) {
-                            currentNum = Double.parseDouble(splitEqu.get(c+1)) / Double.parseDouble(splitEqu.get(c-1));
+                            currentNum = Double.parseDouble(splitEqu.get(c-1)) / Double.parseDouble(splitEqu.get(c+1));
                         }
                         else if (item.equals("+")) {
                             currentNum = Double.parseDouble(splitEqu.get(c-1)) + Double.parseDouble(splitEqu.get(c+1));
                         }
-                        else if (item.equals("-")) {
-                            currentNum = Double.parseDouble(splitEqu.get(c+1)) - Double.parseDouble(splitEqu.get(c-1));
-                        }
-                        
+
 
                         // Removes the used numbers and replaces with the new value
                         splitEqu.remove(c+1);
