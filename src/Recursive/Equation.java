@@ -169,7 +169,6 @@ public class Equation {
                 }
             }
         }
-        System.out.println(splitEqu);
         // Clean array here
         splitEqu = simpleClean(splitEqu);
 
